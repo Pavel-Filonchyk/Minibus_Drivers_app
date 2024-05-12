@@ -18,3 +18,10 @@ export const sendReportError = (data) => {
         payload: data 
     } 
 }
+
+export const closeReportSuccess = (data) => {
+    return {
+        type: 'CLOSE_REPORT_SUCCESS',
+        payload: data 
+    } 
+}

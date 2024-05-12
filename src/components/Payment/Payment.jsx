@@ -1,23 +1,38 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { useReactToPrint } from 'react-to-print'
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
+import ModalWrapper from '../../wrapers/ModalWrarrer/ModalWrapper'
 import { putPaid } from '../../core/actions/transitActions'
-import { sendReport } from '../../core/actions/sendReportAction'
+import { sendReport, closeReportSuccess } from '../../core/actions/sendReportAction'
 
 export default function Payment({navigation}) {
     const dispatch = useDispatch()
-    const componentRef = useRef()
 
     const paymentPay = useSelector(({transitReducer: { paymentPay }}) => paymentPay)
     const paymentPaid = useSelector(({transitReducer: { paymentPaid }}) => paymentPaid)
     const pay = useSelector(({transitReducer: { pay }}) => pay)
     const paid = useSelector(({transitReducer: { paid }}) => paid)
+    const sendReportSuccess = useSelector(({sendReportReducer: { sendReportSuccess }}) => sendReportSuccess)
+    
+    const [showModal, setShowModal] = useState(false)
     const totalPaid = pay + paid
    
+    useEffect(() => {
+      if (sendReportSuccess === 'OK'){
+        setShowModal(true)
+        setTimeout(() => {
+            setShowModal(false)
+            dispatch(closeReportSuccess())
+        },2500)
+      }
+    }, [sendReportSuccess])
+    
+
     const onPutPaid = (arg) => {
         dispatch(putPaid(arg))
     }
@@ -25,10 +40,6 @@ export default function Payment({navigation}) {
         dispatch(sendReport())
     }
     
-    // = useReactToPrint({
-    //     content: () => componentRef.current,
-        
-    // })
     return (
         <View style={styles.container}>
             <Header
@@ -39,7 +50,7 @@ export default function Payment({navigation}) {
                 <Text style={styles.textPayment}>Всего: {totalPaid} б.р.</Text>
             </View>
             <ScrollView>
-                <View style={styles.wrapPerson} ref={componentRef}>
+                <View style={styles.wrapPerson}>
                     <View style={styles.wrapStatusPayment}>
                         <Text style={styles.textStatusPayment}>Ожидает оплаты : {paymentPay?.length}</Text>
                     </View>
@@ -122,6 +133,24 @@ export default function Payment({navigation}) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            <ModalWrapper showModal={showModal}>
+                <View style={styles.wrapTextModal}>
+                    {
+                        sendReportSuccess === "OK" ? 
+                            <>
+                                <Text style={styles.textModal}>Отчет</Text>
+                                <Text style={styles.textModal}>успешно отправлен!</Text>
+                                <AntDesign name="smileo" size={48} color="white" style={{marginTop: 20}} />
+                            </>
+                        :   
+                            <>
+                                <Text style={styles.textModal}>Ошибка отправки</Text>
+                                <Text style={styles.textModal}>Попробуйте снова</Text>
+                                <AntDesign name="frowno" size={48} color="white" style={{marginTop: 20}} />
+                            </>
+                    }
+                </View>
+            </ModalWrapper>
             <Footer
                 navigation={navigation} 
             />
@@ -223,6 +252,18 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: '800',
     },
+    wrapTextModal: {
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textModal: {
+        fontWeight: '600',
+        fontSize: 31,
+        color: "white",
+        lineHeight: 50,
+        textAlign: 'center'
+    }
 })
 
 const styleWrapPayment = StyleSheet.create({
