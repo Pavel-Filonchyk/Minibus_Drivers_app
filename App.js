@@ -7,6 +7,7 @@ import Main from './src/components/Main/Main'
 import Boarding from './src/components/Boarding/Boarding'
 import Payment from './src/components/Payment/Payment'
 import Landing from './src/components/Landing/Landing'
+import Profile from './src/components/Profile/Profile'
 
 const Stack = createNativeStackNavigator()
 
@@ -19,6 +20,7 @@ export default function App() {
           <Stack.Screen name="boarding" component={Boarding} options={{ headerShown: false }}/>
           <Stack.Screen name="payment" component={Payment} options={{ headerShown: false }}/>
           <Stack.Screen name="landing" component={Landing} options={{ headerShown: false }}/>
+          <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -24,6 +24,7 @@ const transitReducer = (state = initialState, action) => {
                 paymentPaid: [],
                 pay: 0,
                 paid: 0,
+                transitLinks: 'boarding',
             }
         case 'CHOICE-TRANSIT': 
             return {
@@ -31,7 +32,6 @@ const transitReducer = (state = initialState, action) => {
                 transitLinks: action.payload,
             }
         case 'PUT-PAYMENT': 
-            console.log(action.payload)
             const phoneNumber = action.payload?.phoneNumber
             const indicator = action.payload?.indicator
             const findUser = state.choiceRoute[0]?.persons?.find(item => item.phoneNumber === phoneNumber)

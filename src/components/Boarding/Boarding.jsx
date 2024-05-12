@@ -13,8 +13,6 @@ export default function Boarding({ navigation }) {
     const choiceRoute = useSelector(({transitReducer: { choiceRoute }}) => choiceRoute)
     const freeSeats = useSelector(({transitReducer: { freeSeats }}) => freeSeats)
     
-    console.log(choiceRoute)
-
     const onPutPayment = (arg) => {
         dispatch(putPayment(arg))
     }
@@ -56,7 +54,7 @@ export default function Boarding({ navigation }) {
                                         </View>
                                         <View style={styles.wrapIndicators}>
                                             <Text style={styles.textIndicators}>Заказано мест</Text>
-                                            <Text style={styles.textIndicators}>{item.numberSeats}</Text>
+                                            <Text style={styles.textNumberSeats}>{item.numberSeats}</Text>
                                         </View>
                                         <View style={styles.wrapIndicators}>
                                             <TouchableOpacity style={styles.blockIndicators}
@@ -204,6 +202,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 20,
         marginRight: 20,
+    },
+    textNumberSeats: {
+        fontWeight: '800',
+        fontSize: 16,
+        color: 'white',
+        marginRight: 5
     },
     blockIndicators: {
         flexDirection: 'row',

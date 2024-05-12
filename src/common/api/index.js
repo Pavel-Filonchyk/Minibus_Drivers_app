@@ -23,3 +23,8 @@ export const QUEUES_URL = 'https://minibus-travel-default-rtdb.europe-west1.fire
 export const queuesUrl = (index) => {
     return `https://minibus-travel-default-rtdb.europe-west1.firebasedatabase.app/queues/${index}.json`
 }
+
+export const REPORT_URL = 'https://minibus-travel-default-rtdb.europe-west1.firebasedatabase.app/report.json'
+export const reportUrl = (index) => {
+    return `https://minibus-travel-default-rtdb.europe-west1.firebasedatabase.app/report/${index}.json`
+}

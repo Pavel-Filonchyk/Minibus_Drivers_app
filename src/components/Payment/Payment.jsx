@@ -6,6 +6,7 @@ import { useReactToPrint } from 'react-to-print'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 import { putPaid } from '../../core/actions/transitActions'
+import { sendReport } from '../../core/actions/sendReportAction'
 
 export default function Payment({navigation}) {
     const dispatch = useDispatch()
@@ -16,14 +17,18 @@ export default function Payment({navigation}) {
     const pay = useSelector(({transitReducer: { pay }}) => pay)
     const paid = useSelector(({transitReducer: { paid }}) => paid)
     const totalPaid = pay + paid
-
+   
     const onPutPaid = (arg) => {
         dispatch(putPaid(arg))
     }
-    const onSendReport = useReactToPrint({
-        content: () => componentRef.current,
-      })
-
+    const onSendReport = () => {
+        dispatch(sendReport())
+    }
+    
+    // = useReactToPrint({
+    //     content: () => componentRef.current,
+        
+    // })
     return (
         <View style={styles.container}>
             <Header
@@ -53,7 +58,7 @@ export default function Payment({navigation}) {
                                     </View>
                                     <View style={styles.wrapIndicators}>
                                         <Text style={{...styletTextIndicators, color: 'white'}}>Заказано мест</Text>
-                                        <Text style={{...styletTextIndicators, color: 'white'}}>{item.numberSeats}</Text>
+                                        <Text style={styles.textNumberSeats}>{item.numberSeats}</Text>
                                     </View>
                                     <View style={styles.wrapIndicators}>
                                         <TouchableOpacity style={{flexDirection: 'row'}}
@@ -79,7 +84,7 @@ export default function Payment({navigation}) {
                     {
                         paymentPaid.map(item => {
                             return (
-                                <View style={styles.blockPerson}>
+                                <View style={styles.blockPerson} key={item.id}>
                                     <View style={styles.wrapFullName}>
                                         <Text style={styles.textFullName}>{item.fullName}</Text>
                                         <TouchableOpacity>
@@ -91,7 +96,7 @@ export default function Payment({navigation}) {
                                     </View>
                                     <View style={styles.wrapIndicators}>
                                         <Text style={{...styletTextIndicators, color: 'white'}}>Заказано мест</Text>
-                                        <Text style={{...styletTextIndicators, color: 'white'}}>{item.numberSeats}</Text>
+                                        <Text style={styles.textNumberSeats}>{item.numberSeats}</Text>
                                     </View>
                                     <View style={styles.wrapIndicators}>
                                         <View style={{flexDirection: 'row'}}>
@@ -111,7 +116,7 @@ export default function Payment({navigation}) {
                 <View style={styles.wrapBtns}>
                     <TouchableOpacity
                         style={styles.btnOrder}
-                        onPress={() => onSendReport()}
+                        onPress={onSendReport}
                     >
                         <Text style={styles.textBtnOrder}>ОТЧЕТ</Text>
                     </TouchableOpacity>
@@ -156,6 +161,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#E8793E',
         fontWeight: '800',
+    },
+    textNumberSeats: {
+        fontWeight: '800',
+        fontSize: 16,
+        color: 'white',
+        marginRight: 5
     },
     blockPerson: {
         width: '100%',

@@ -23,7 +23,7 @@ export default function Footer({ navigation }) {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginLeft: 30}}
-                    //onPress={() => onChangePage('profile')}
+                    onPress={() => onChangePage('profile')}
                 >
                     <Image 
                         style={styles.btnFooter}
