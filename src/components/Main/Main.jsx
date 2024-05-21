@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getAllTravels } from '../../core/actions/getTravelsActions'
 import { sendRoute } from '../../core/actions/transitActions'
 import Footer from '../Footer/Footer'

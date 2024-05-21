@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Linking, Platform } from 'react-native'
 import _ from 'lodash'
 
 import Footer from '../Footer/Footer'
@@ -34,14 +34,20 @@ export default function Boarding({ navigation }) {
                         return (
                             <>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <Text style={styles.textTripFrom}>{item.tripFrom}, ост. {item.wayStart}</Text>
+                                    <View style={{marginTop: 8}}>
+                                        <Text style={styles.textTripFrom}>{item.tripFrom}</Text>
+                                        <Text style={styles.textTripFrom}>ост. {item.wayStart}</Text>
+                                    </View>
+                                    
                                     <Text style={styles.textTimeStart}>{item.timeStart}</Text>
                                 </View>
                                 <View style={styles.wrapPerson} key={item.blockId} >
                                     <View style={styles.blockPerson}>
                                         <View style={styles.wrapFullName}>
                                             <Text style={styles.textFullName}>{item.fullName}</Text>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => Linking.openURL(Platform.OS !== 'android' ? `telprompt:${item.phoneNumber}` : `tel:${item.phoneNumber}`)}
+                                            >
                                                 <Image 
                                                     style={styles.phone}
                                                     source={require('./images/phone.png')}
@@ -49,8 +55,8 @@ export default function Boarding({ navigation }) {
                                             </TouchableOpacity>
                                         </View>
                                         <View>
-                                            <Text style={styles.tripTo}>Место высадки:</Text>
-                                            <Text style={styles.tripTo}>     {item.tripTo}, {item.wayStop}</Text>
+                                            <Text style={styles.tripTo}>Место высадки:  {item.tripTo}</Text>
+                                            <Text style={styles.tripTo}>ост.  {item.wayStop}</Text>
                                         </View>
                                         <View style={styles.wrapIndicators}>
                                             <Text style={styles.textIndicators}>Заказано мест</Text>
@@ -144,12 +150,13 @@ const styles = StyleSheet.create({
     },
 
     textTripFrom: {
-        fontSize: 19,
+        fontSize: 18,
         fontWeight: '900',
         color:'#F75E25' ,//'#F75E25',
         marginLeft: 14,
         marginBottom: 5,
-        marginTop: 8
+        padding: 0,
+        marginTop: 0
     },
     textTimeStart: {
         fontSize: 17,
@@ -157,7 +164,7 @@ const styles = StyleSheet.create({
         color: 'white',//'#F75E25',
         marginRight: 14,
         marginBottom: 5,
-        marginTop: 8
+        marginTop: 18
     },
     wrapPerson: {
         marginBottom: 'auto',
@@ -191,7 +198,7 @@ const styles = StyleSheet.create({
         height: 30
     },
     tripTo: {
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '800',
         color: 'white',
         marginLeft: 20,

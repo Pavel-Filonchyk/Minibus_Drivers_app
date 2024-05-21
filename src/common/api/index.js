@@ -28,3 +28,5 @@ export const REPORT_URL = 'https://minibus-travel-default-rtdb.europe-west1.fire
 export const reportUrl = (index) => {
     return `https://minibus-travel-default-rtdb.europe-west1.firebasedatabase.app/report/${index}.json`
 }
+
+export const AUTH_URL = 'https://app.sms.by/api/v1/sendQuickSMS'

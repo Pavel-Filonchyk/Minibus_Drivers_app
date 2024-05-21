@@ -8,6 +8,7 @@ import Boarding from './src/components/Boarding/Boarding'
 import Payment from './src/components/Payment/Payment'
 import Landing from './src/components/Landing/Landing'
 import Profile from './src/components/Profile/Profile'
+import Auth from './src/components/Auth/Auth'
 
 const Stack = createNativeStackNavigator()
 
@@ -15,12 +16,13 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="home">
+        <Stack.Navigator initialRouteName="auth">
           <Stack.Screen name="home" component={Main} options={{ headerShown: false }}/>
+          <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }}/>
           <Stack.Screen name="boarding" component={Boarding} options={{ headerShown: false }}/>
           <Stack.Screen name="payment" component={Payment} options={{ headerShown: false }}/>
           <Stack.Screen name="landing" component={Landing} options={{ headerShown: false }}/>
-          <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }}/>
+          <Stack.Screen name="auth" component={Auth} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

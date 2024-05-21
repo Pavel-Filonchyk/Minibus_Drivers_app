@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: 'hidden',
     zIndex: 1000,
-    backgroundColor: 'rgba( 127,199,255,0.9)',
+    backgroundColor: '#1B5583',
     height: '100%'
   },
   modalView: {
