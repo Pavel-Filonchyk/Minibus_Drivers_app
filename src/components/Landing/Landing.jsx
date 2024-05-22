@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Linking, Platform } from 'react-native'
 
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
@@ -12,6 +12,22 @@ export default function Landing({navigation}) {
     const landing = useSelector(({transitReducer: { landing }}) => landing)
     const freeSeats = useSelector(({transitReducer: { freeSeats }}) => freeSeats)
 
+    const numberBusstop = landing[0]?.numberBusstopStop
+    
+    const users = []
+    for (let i of landing) {
+        if(users.length === 0){
+            users.push(landing[0])
+        }
+        if(users.length > 0){
+            if(numberBusstop > i?.numberBusstopStop){
+                users.unshift(i)
+            }
+            if(numberBusstop < i?.numberBusstopStop){
+                users.push(i)
+            }
+        }
+    }
     const onDeleteUser = (phoneNumber) => {
         dispatch(deleteUser(phoneNumber))
     }
@@ -27,7 +43,7 @@ export default function Landing({navigation}) {
             </View>
             <ScrollView>
                 {
-                    landing?.map(item => {
+                    users?.map(item => {
                         return (
                             <>
                                 <Text style={styles.textTripTo}>{item.tripTo}, {item.wayStop}</Text>
@@ -35,7 +51,9 @@ export default function Landing({navigation}) {
                                     <View style={styles.blockPerson}>
                                         <View style={styles.wrapFullName}>
                                             <Text style={styles.textFullName}>{item.fullName}</Text>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => Linking.openURL(Platform.OS !== 'android' ? `telprompt:${item.phoneNumber}` : `tel:${item.phoneNumber}`)}
+                                            >
                                                 <Image 
                                                     style={styles.phone}
                                                     source={require('../Boarding/images/phone.png')}

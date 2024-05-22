@@ -4,14 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { sendCodeData, resetErrorCode } from '../../core/actions/authActions'
+import { getDrivers } from '../../core/actions/getDriversActions'
 
 export default function Auth({ navigation }) {
     
     const dispatch = useDispatch()
 
     const getCode = useSelector(({authReducer: { getCode }}) => getCode)
-    console.log(getCode)
     const errorCode = useSelector(({authReducer: { errorCode }}) => errorCode)
+    const driversData = useSelector(({getDriversReducer: { driversData }}) => driversData)
 
     const [fullName, setFullName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState(null)
@@ -20,12 +21,17 @@ export default function Auth({ navigation }) {
     const [showBtn, setShowBtn] = useState(false)
     const [errorTextPhone, setErrorTextPhone] = useState(false)
     const [errorTextCode, setErrorTextCode] = useState(false)
-
+    
     useLayoutEffect(() => {
+        dispatch(getDrivers())
+    }, [])
+    useEffect(() => {
         const getItemStorage = async () => {
             try {
                 const value = await AsyncStorage.getItem('auth')
-                if(value !== null) {
+                const jsonValue = JSON.parse(value)
+                const findDriver = driversData?.find(item => item.phoneDriver === jsonValue.phoneNumber)
+                if(value !== null && findDriver !== undefined) {
                     navigation.navigate('home')
                     return value
                 }
@@ -35,7 +41,6 @@ export default function Auth({ navigation }) {
         }
         getItemStorage()
     }, [])
-
     useEffect(() => {
         if (createCode !== null) {
             dispatch(sendCodeData({code: createCode.toString(), phoneNumber: `+375${phoneNumber}`}))

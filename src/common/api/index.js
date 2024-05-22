@@ -30,3 +30,5 @@ export const reportUrl = (index) => {
 }
 
 export const AUTH_URL = 'https://app.sms.by/api/v1/sendQuickSMS'
+
+export const DRIVERS_URL = 'https://minibus-travel-default-rtdb.europe-west1.firebasedatabase.app/drivers.json'

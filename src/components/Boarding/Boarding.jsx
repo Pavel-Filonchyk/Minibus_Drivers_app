@@ -12,7 +12,23 @@ export default function Boarding({ navigation }) {
 
     const choiceRoute = useSelector(({transitReducer: { choiceRoute }}) => choiceRoute)
     const freeSeats = useSelector(({transitReducer: { freeSeats }}) => freeSeats)
+    const passengers = choiceRoute[0]?.persons.filter(item => item.fullName !== 'DEFAULT')
+    const numberBusstop = passengers[0]?.numberBusstopStart
     
+    const users = []
+    for (let i of passengers) {
+        if(users.length === 0){
+            users.push(passengers[0])
+        }
+        if(users.length > 0){
+            if(numberBusstop > i?.numberBusstopStart){
+                users.unshift(i)
+            }
+            if(numberBusstop < i?.numberBusstopStart){
+                users.push(i)
+            }
+        }
+    }
     const onPutPayment = (arg) => {
         dispatch(putPayment(arg))
     }
@@ -28,9 +44,7 @@ export default function Boarding({ navigation }) {
             </View>
             <ScrollView>
                 {
-                    choiceRoute[0]?.persons
-                    .filter(item => item.fullName !== 'DEFAULT')
-                    ?.map(item => {
+                    users?.map(item => { 
                         return (
                             <>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
