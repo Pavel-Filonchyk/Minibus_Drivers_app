@@ -30,8 +30,9 @@ export default function Auth({ navigation }) {
             try {
                 const value = await AsyncStorage.getItem('auth')
                 const jsonValue = JSON.parse(value)
-                const findDriver = driversData?.find(item => item.phoneDriver === jsonValue.phoneNumber)
-                if(value !== null && findDriver !== undefined) {
+                // const findDriver = driversData?.find(item => item.phoneDriver === jsonValue.phoneNumber)
+                // && findDriver !== undefined
+                if(value !== null) {
                     navigation.navigate('home')
                     return value
                 }

@@ -14,7 +14,7 @@ export default function Boarding({ navigation }) {
     const freeSeats = useSelector(({transitReducer: { freeSeats }}) => freeSeats)
     const passengers = choiceRoute[0]?.persons.filter(item => item.fullName !== 'DEFAULT')
     const numberBusstop = passengers[0]?.numberBusstopStart
-    
+
     const users = []
     for (let i of passengers) {
         if(users.length === 0){
@@ -29,6 +29,7 @@ export default function Boarding({ navigation }) {
             }
         }
     }
+  
     const onPutPayment = (arg) => {
         dispatch(putPayment(arg))
     }

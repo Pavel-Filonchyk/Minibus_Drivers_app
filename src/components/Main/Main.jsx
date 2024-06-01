@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getAllTravels } from '../../core/actions/getTravelsActions'
 import { sendRoute } from '../../core/actions/transitActions'
 import Footer from '../Footer/Footer'
@@ -50,6 +49,7 @@ export default function Main({ navigation }) {
                 return (
                   <TouchableOpacity style={{...styleRoutes, backgroundColor: activeRoute === item.blockId ? '#F75E25' : '#3168b0' }}
                     onPress={() => onChoiceDateRoutes({blockId: item.blockId, dateTrip: item.dateTrip})}
+                    key={item.blockId}
                   >
                     <Text style={{...styleTextRoutes}}>{item.dateTrip}</Text>
                   </TouchableOpacity>

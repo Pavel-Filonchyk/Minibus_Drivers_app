@@ -21,8 +21,8 @@ export default function App() {
           <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }}/>
           <Stack.Screen name="boarding" component={Boarding} options={{ headerShown: false }}/>
           <Stack.Screen name="payment" component={Payment} options={{ headerShown: false }}/>
-          <Stack.Screen name="landing" component={Landing} options={{ headerShown: false }}/>
           <Stack.Screen name="auth" component={Auth} options={{ headerShown: false }}/>
+          <Stack.Screen name="landing" component={Landing} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
